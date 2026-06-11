@@ -25,7 +25,7 @@ const DATA = {
       stack: 'React · Node · MongoDB · Gemini',
       tint: 'var(--sky)',
       desc: 'End-to-end pipeline that turns unstructured CV data into a deployed portfolio site — Gemini extracts validated JSON, Vercel auto-deploys, QR code for one-click sharing.',
-      href: 'https://github.com/zk19604',
+      links: { code: 'https://github.com/zk19604/resuflow', live: 'https://resuflow-three.vercel.app' },
     },
     {
       name: 'HomeFinder',
@@ -33,24 +33,36 @@ const DATA = {
       stack: 'Java · Firebase · Cloudinary',
       tint: 'var(--pink)',
       desc: 'Full-stack Android app with tenant & landlord flows, auth and real-time sync. 100+ property listings on Firebase with AI-based recommendations.',
-      href: 'https://github.com/zk19604',
+      links: { code: 'https://github.com/zk19604' },
     },
     {
-      name: 'MoodTunes',
-      sub: 'Mood → music engine',
-      stack: 'Node · SQL Server · Spotify',
+      name: 'DropTheDB',
+      sub: 'Mood -> music social platform',
+      stack: 'React · Node · SQL Server · Spotify',
       tint: 'var(--sun)',
-      desc: 'Backend system that maps your mood to a freshly generated Spotify playlist (10+ songs/session) over a normalized schema spanning 10+ tables.',
-      href: 'https://github.com/zk19604',
+      desc: 'Full-stack music social platform — search & like songs via the Spotify API, build playlists, connect with friends, and get Gemini-powered mood-based recommendations over a custom SQL Server schema.',
+      links: { code: 'https://github.com/zk19604/dropthedb' },
     },
     {
-      name: 'More on GitHub',
-      sub: 'the rest of the box',
-      stack: 'open the drawer →',
+      name: 'Sudoku (Assembly)',
+      sub: 'x86 8088 console game',
+      stack: 'Assembly · x86 8088',
       tint: 'var(--olive)',
-      desc: 'Plenty more experiments, course projects and half-finished ideas living on my GitHub. Come dig around.',
-      href: 'https://github.com/zk19604',
+      desc: 'A fully playable Sudoku game written in x86 8088 assembly — modular screen rendering and direct video-memory manipulation for fast, console-based gameplay.',
+      links: { code: 'https://github.com/zk19604/sudoku-game' },
     },
+    {
+      name: 'Portfolio 3D',
+      sub: 'Interactive 3D portfolio',
+      stack: 'JavaScript · WebGL · Vercel',
+      tint: 'var(--sky-deep)',
+      desc: 'An interactive 3D take on the personal-portfolio idea — playful, scene-driven and deployed on Vercel.',
+      links: { code: 'https://github.com/zk19604/portfolio-3d', live: 'https://portfolio-3d-nu-six.vercel.app' },
+    },
+
+
+
+
   ],
 
   experience: [
@@ -64,6 +76,18 @@ const DATA = {
         'Built a live phone-preview component with instant QR rendering (20+ dot shapes, gradient fills, custom logos), killing all third-party QR tool dependencies.',
         'Shipped a cross-platform analytics pipeline tracking taps, geo-location, device breakdowns & link clicks — driving the premium upsell strategy.',
         'Engineered 10+ RESTful endpoints in a 4-member Agile team.',
+      ],
+    },
+    {
+      role: 'Database Teaching Assistant',
+      org: 'FAST NUCES',
+      dates: 'Jan 2026 – May 2026',
+      color: 'var(--sky)',
+      bullets: [
+        'Supported delivery of a database course for 50+ students, providing academic and technical guidance throughout the semester.',
+        'Evaluated assignments, quizzes & coursework, giving constructive feedback to lift student performance.',
+        'Helped students master core concepts — SQL, normalization, ER diagrams & relational database design.',
+        'Partnered with the instructor to uphold grading standards and keep course operations running smoothly.',
       ],
     },
     {

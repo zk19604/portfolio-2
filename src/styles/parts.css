@@ -243,19 +243,51 @@
 
 .rack__row { display: flex; flex-wrap: wrap; gap: 30px 30px; justify-content: center; position: relative; }
 .pola {
-  position: relative; width: 220px; background: var(--paper-2);
-  border: 3px solid var(--ink); box-shadow: var(--sh-2);
-  padding: 12px 12px 0; text-decoration: none; color: var(--ink);
+  position: relative; width: 220px; height: 244px;
+  text-decoration: none; color: var(--ink); cursor: pointer;
   rotate: var(--rot); transform-origin: top center;
-  transition: rotate .18s ease, transform .18s ease, box-shadow .18s ease;
-  margin-top: 14px;
+  transition: rotate .18s ease, transform .18s ease;
+  margin-top: 14px; perspective: 1200px;
 }
-.pola:hover { rotate: 0deg; transform: translateY(-6px); box-shadow: 10px 12px 0 var(--ink); z-index: 5; }
+.pola:hover { rotate: 0deg; transform: translateY(-6px); z-index: 5; }
+.pola.is-flipped { z-index: 6; }
 .pola__peg {
-  position: absolute; top: -16px; left: 50%; translate: -50% 0;
+  position: absolute; top: -16px; left: 50%; translate: -50% 0; z-index: 3;
   width: 14px; height: 14px; border-radius: 50%; background: var(--red);
   border: 3px solid var(--ink); box-shadow: 0 0 0 3px var(--paper);
 }
+/* 3D flip wrapper */
+.pola__inner {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.2,.7,.2,1);
+}
+.pola.is-flipped .pola__inner { transform: rotateY(180deg); }
+.pola__face {
+  position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  border: 3px solid var(--ink); box-shadow: var(--sh-2);
+}
+.pola__front { background: var(--paper-2); padding: 12px 12px 0; }
+.pola:hover .pola__face { box-shadow: 10px 12px 0 var(--ink); }
+.pola__back {
+  transform: rotateY(180deg); background: var(--ink); color: var(--paper-2);
+  display: flex; flex-direction: column; padding: 14px;
+}
+.pola__backname { font-family: var(--pixel); font-size: 11px; color: var(--sun); margin-bottom: 8px; }
+.pola__desc {
+  flex: 1; margin: 0; font-family: var(--body); font-size: 11px; line-height: 1.5;
+  overflow: auto;
+}
+.pola__links {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+  padding-top: 10px; border-top: 2px solid rgba(246,239,222,.25);
+}
+.pola__link {
+  font-family: var(--pixel); font-size: 9px; color: var(--paper-2);
+  text-decoration: none; border: 2px solid var(--paper-2);
+  padding: 5px 8px; line-height: 1; transition: background .14s, color .14s;
+}
+.pola__link:hover { background: var(--sun); color: var(--ink); border-color: var(--sun); }
 .pola__photo {
   position: relative; height: 170px; background: var(--tint);
   border: 2px solid var(--ink); overflow: hidden;
@@ -274,14 +306,8 @@
 }
 .pola__caption { display: flex; align-items: center; justify-content: space-between; padding: 12px 4px 16px; }
 .pola__name { font-family: var(--pixel); font-size: 11px; }
-.pola__arrow { font-family: var(--pixel); font-size: 12px; color: var(--blue); }
-.pola__hover {
-  position: absolute; left: -3px; right: -3px; top: calc(100% + 8px);
-  background: var(--ink); color: var(--paper-2); font-family: var(--body); font-size: 11.5px; line-height: 1.55;
-  padding: 12px 14px; border: 3px solid var(--ink); box-shadow: var(--sh-1);
-  opacity: 0; translate: 0 6px; pointer-events: none; transition: opacity .15s, translate .15s; z-index: 6;
-}
-.pola:hover .pola__hover { opacity: 1; translate: 0 0; }
+.pola__arrow { font-family: var(--pixel); font-size: 13px; color: var(--blue); }
+.pola.is-flipped .pola__arrow { color: var(--red); }
 
 /* ============ EXPERIENCE — manila folder stack (labz.design vibe) ============ */
 /* width:100% is the fix — inside the flex-column .section, margin:0 auto with no

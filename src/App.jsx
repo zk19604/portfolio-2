@@ -16,8 +16,10 @@ export default function App() {
       <About />
       <Projects />
       <Experience />
+      
+     
       <Education />
-      <Skills />
+       <Skills />
       <Footer />
       <ChatDock />
     </>
