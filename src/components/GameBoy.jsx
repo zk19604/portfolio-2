@@ -1,13 +1,5 @@
 import { useEffect, useRef } from 'react'
 
-/* ================================================================== */
-/*  ZK BOY — my Pac-Man engine (maze + 4 ghosts w/ chase/fright/eaten */
-/*  modes, power pellets, lives, score) wrapped in the pixel-Mac      */
-/*  chassis. You drive Pac with the arrow keys / on-screen D-pad —    */
-/*  turns are buffered, he coasts until you steer, and GAME OVER /    */
-/*  YOU WIN wait for a keypress to restart.                           */
-/* ================================================================== */
-
 const MAZE = [
   '###################',
   '#........#........#',
@@ -119,8 +111,8 @@ function lerp(e) {
 
 export default function GameBoy() {
   const canvasRef = useRef(null)
-  const inputRef = useRef(null) // desired direction string from the player
-  const pressRef = useRef(0) // bumps on every key/D-pad press (for restart)
+  const inputRef = useRef(null)
+  const pressRef = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -163,7 +155,6 @@ export default function GameBoy() {
     }
 
     const pacChoose = (e) => {
-      // turn toward the buffered input the moment that turn is legal
       const want = inputRef.current
       if (want) {
         const d = DIRS[want]
@@ -172,7 +163,6 @@ export default function GameBoy() {
           return
         }
       }
-      // otherwise keep coasting; stop if we've run into a wall
       const d = DIRS[e.dir]
       if (e.dir && !free(e.col + d.x, e.row + d.y, false)) e.dir = null
     }
@@ -187,15 +177,14 @@ export default function GameBoy() {
       s.frame++
 
       if (s.status === 'start') {
-        // hold on the title screen until the player says "yes" (a key/D-pad press)
         if (s.startAt == null) s.startAt = pressRef.current
         else if (pressRef.current > s.startAt) {
           s.status = 'play'
-          inputRef.current = null // don't carry the "start" press into a move
+          inputRef.current = null
         }
       } else if (s.status === 'play') {
         if (s.fright > 0) s.fright--
-        stepEntity(s.pac, 0.14, false, pacChoose)
+        stepEntity(s.pac, 0.11, false, pacChoose)   // was 0.14
 
         const key = `${s.pac.col},${s.pac.row}`
         if (s.dots.has(key)) {
@@ -212,9 +201,9 @@ export default function GameBoy() {
         s.ghosts.forEach((g) => {
           if (s.frame < g.release) return
           if (s.fright === 0 && g.mode === 'fright') g.mode = 'chase'
-          let speed = 0.105
-          if (g.mode === 'fright') speed = 0.07
-          if (g.mode === 'eaten') speed = 0.24
+          let speed = 0.07    // was 0.105
+          if (g.mode === 'fright') speed = 0.05  // was 0.07
+          if (g.mode === 'eaten') speed = 0.17    // was 0.24
           stepEntity(g, speed, true, ghostChoose(g))
           if (g.mode === 'eaten' && g.col === HOME.col && g.row === HOME.row && !g.moving) g.mode = 'chase'
         })
@@ -245,7 +234,6 @@ export default function GameBoy() {
           s = fresh
         }
       } else if (s.status === 'over' || s.status === 'win') {
-        // real end state — wait for a fresh keypress, then start over
         if (s.restartAt == null) s.restartAt = pressRef.current
         else if (pressRef.current > s.restartAt) s = initState()
       }
@@ -313,7 +301,7 @@ export default function GameBoy() {
       if (s.status !== 'dead' || Math.floor(s.frame / 6) % 2 === 0) {
         const p = lerp(s.pac)
         const baseAng = { right: 0, down: Math.PI / 2, left: Math.PI, up: -Math.PI / 2 }[s.pac.dir || 'left']
-        const mouth = (Math.abs(Math.sin(s.frame * 0.25)) * 0.32 + 0.04) * Math.PI
+        const mouth = (Math.abs(Math.sin(s.frame * 0.15)) * 0.32 + 0.04) * Math.PI  // was 0.25
         ctx.fillStyle = '#f7d51d'
         ctx.beginPath()
         ctx.moveTo(p.x, p.y)
@@ -363,7 +351,6 @@ export default function GameBoy() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  // keyboard
   useEffect(() => {
     const map = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }
     const onKey = (e) => {
