@@ -1,0 +1,211 @@
+/* ===========================================================
+   ZAINAB KHALIL — Pixel-Mac Portfolio
+   Theme 2: Macintosh pixel nostalgia (cream + sky blue)
+   =========================================================== */
+
+:root {
+  /* paper / ink */
+  --paper:      #ece2cd;
+  --paper-2:    #f6efde;
+  --paper-3:    #e2d6bb;
+  --ink:        #221f1a;
+  --ink-soft:   #534d40;
+  --line:       #221f1a;
+
+  /* mac accents */
+  --sky:        #a9d2ec;
+  --sky-deep:   #6fb0dd;
+  --blue:       #2f6fb0;
+  --maze:       #1d54d6;
+  --maze-glow:  #3f74ff;
+  --sun:        #f2c021;
+  --sun-deep:   #e0a40f;
+  --pink:       #efa9c4;
+  --pink-deep:  #e07ba4;
+  --olive:      #7d9a4e;
+  --olive-deep: #5f7d38;
+  --forest:     #2f7d5b;
+  --forest-2:   #266a4c;
+  --red:        #df5443;
+  --charcoal:   #2a261f;
+
+  /* type */
+  --pixel: 'Press Start 2P', monospace;
+  --term:  'VT323', monospace;
+  --body:  'Space Mono', 'Courier New', monospace;
+
+  /* pixel shadow */
+  --sh-1: 4px 4px 0 var(--ink);
+  --sh-2: 6px 6px 0 var(--ink);
+  --sh-3: 8px 8px 0 var(--ink);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 56px; /* clear the fixed header when jumping to an anchor */
+}
+
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+}
+
+/* dotted paper texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(rgba(34,31,26,0.06) 1.2px, transparent 1.3px);
+  background-size: 7px 7px;
+  opacity: 0.7;
+}
+
+#root { position: relative; z-index: 1; }
+
+::selection { background: var(--sun); color: var(--ink); }
+
+/* ---------- shared atoms ---------- */
+
+.pixel { font-family: var(--pixel); line-height: 1.6; }
+.term  { font-family: var(--term); line-height: 1; }
+.mono  { font-family: var(--body); }
+
+.hard {
+  border: 3px solid var(--ink);
+  box-shadow: var(--sh-2);
+}
+.hard-sm {
+  border: 3px solid var(--ink);
+  box-shadow: var(--sh-1);
+}
+
+/* classic mac window */
+.win {
+  background: var(--paper-2);
+  border: 3px solid var(--ink);
+  box-shadow: var(--sh-3);
+  position: relative;
+}
+.win__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  border-bottom: 3px solid var(--ink);
+  background: var(--paper-2);
+  /* the classic striped title bar */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--ink) 0, var(--ink) 2px,
+    transparent 2px, transparent 4px
+  );
+}
+.win__bar .stripe-fill { /* center area that holds the title, masks stripes */
+  background: var(--paper-2);
+}
+.win__close {
+  width: 16px; height: 16px;
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  flex: 0 0 auto;
+}
+.win__title {
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  background: var(--paper-2);
+  padding: 4px 12px;
+  border: 2px solid var(--ink);
+  white-space: nowrap;
+}
+.win__body { padding: 22px; }
+
+/* section title plate */
+.plate {
+  display: inline-block;
+  font-family: var(--pixel);
+  background: var(--ink);
+  color: var(--paper-2);
+  padding: 12px 18px;
+  border: 3px solid var(--ink);
+  box-shadow: var(--sh-2);
+  letter-spacing: 1px;
+}
+
+/* pixel button */
+.pbtn {
+  font-family: var(--pixel);
+  font-size: 10px;
+  background: var(--sun);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: var(--sh-1);
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: transform .06s steps(2), box-shadow .06s steps(2);
+  user-select: none;
+}
+.pbtn:hover { transform: translate(-1px,-1px); box-shadow: 6px 6px 0 var(--ink); }
+.pbtn:active { transform: translate(4px,4px); box-shadow: 0 0 0 var(--ink); }
+
+/* generic section frame — each one fills a screen and snaps into view, so
+   only a single section is comfortably visible at a time. content is centred
+   vertically, which also leaves clean top/bottom whitespace for the road. */
+.section {
+  position: relative;
+  width: min(1080px, 92vw);
+  margin: 0 auto;
+  padding: 48px 0;
+  z-index: 2;
+  min-height: calc(100vh - 56px); /* exactly one screen below the fixed header */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-margin-top: 56px;
+}
+
+/* the footer is its own compact end-cap — never a full empty screen */
+.footer__inner.section {
+  min-height: auto;
+  display: block;
+  padding: 60px 0;
+}
+
+.eyebrow {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+/* blinking pixel cursor */
+.blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* float */
+@keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-7px);} }
+
+/* scanline shimmer for screens */
+.scanlines::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom, rgba(0,0,0,0.10) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* utility */
+.center { text-align: center; }
+.wrap-pretty { text-wrap: pretty; }
